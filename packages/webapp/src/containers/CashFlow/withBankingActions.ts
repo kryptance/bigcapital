@@ -47,7 +47,7 @@ export interface WithBankingActionsProps {
   resetUncategorizedTranasctionsFilter: () => void;
 }
 
-const mapDipatchToProps = (dispatch: any): WithBankingActionsProps => ({
+const mapDispatchToProps = (dispatch: any): WithBankingActionsProps => ({
   closeMatchingTransactionAside: () =>
     dispatch(closeMatchingTransactionAside()),
   setUncategorizedTransactionIdForMatching: (
@@ -163,4 +163,4 @@ export const withBankingActions = connect<
   WithBankingActionsProps,
   {},
   any
->(null, mapDipatchToProps);
+>(null, mapDispatchToProps);
