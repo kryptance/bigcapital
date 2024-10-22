@@ -170,6 +170,7 @@ export interface IGetUncategorizedTransactionsQuery {
   pageSize?: number;
   minDate?: Date;
   maxDate?: Date;
+  matchDescription?: string;
   minAmount?: number;
   maxAmount?: number;
 }

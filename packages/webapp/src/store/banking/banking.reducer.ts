@@ -15,7 +15,7 @@ interface StorePlaidState {
 
   categorizedTransactionsSelected: Array<number | string>;
 
-  uncategorizedFilter: { fromDate?: string; toDate?: string };
+  uncategorizedFilter: { fromDate?: string; toDate?: string, matchDescription?: string };
 }
 
 export const PlaidSlice = createSlice({
@@ -214,7 +214,10 @@ export const PlaidSlice = createSlice({
       state: StorePlaidState,
       action: PayloadAction<{ filter: any }>,
     ) => {
-      state.uncategorizedFilter = action.payload.filter;
+      state.uncategorizedFilter = {
+        ...state.uncategorizedFilter,
+        ...action.payload.filter
+      };
     },
 
     /**

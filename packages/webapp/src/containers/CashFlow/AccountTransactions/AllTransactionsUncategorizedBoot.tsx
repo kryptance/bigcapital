@@ -39,6 +39,7 @@ function AccountUncategorizedTransactionsBootRoot({
     page_size: 50,
     min_date: uncategorizedTransactionsFilter?.fromDate || null,
     max_date: uncategorizedTransactionsFilter?.toDate || null,
+    match_description: uncategorizedTransactionsFilter?.matchDescription || null,
   });
   // Memorized the cashflow account transactions.
   const uncategorizedTransactions = React.useMemo(
