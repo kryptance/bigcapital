@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 import moment from 'moment';
-import { Model, mixin } from 'objection';
+import {AnyQueryBuilder, mixin, Model} from 'objection';
 import TenantModel from 'models/TenantModel';
 import ModelSettings from './ModelSetting';
 import UncategorizedCashflowTransactionMeta from './UncategorizedCashflowTransaction.meta';
@@ -81,14 +81,14 @@ export default class UncategorizedCashflowTransaction extends mixin(
    * Detarmines whether the transaction is deposit transaction.
    */
   public get isDepositTransaction(): boolean {
-    return 0 < this.deposit;
+    return this.deposit > 0;
   }
 
   /**
    * Detarmines whether the transaction is withdrawal transaction.
    */
   public get isWithdrawalTransaction(): boolean {
-    return 0 < this.withdrawal;
+    return this.withdrawal > 0;
   }
 
   /**
@@ -122,7 +122,7 @@ export default class UncategorizedCashflowTransaction extends mixin(
       /**
        * Filters the not excluded transactions.
        */
-      notExcluded(query) {
+      notExcluded(query: AnyQueryBuilder) {
         query.whereNull('excluded_at');
       },
 
@@ -193,6 +193,10 @@ export default class UncategorizedCashflowTransaction extends mixin(
         const _fromDate = moment(fromDate).startOf('day').format(dateFormat);
 
         query.where('date', '>=', _fromDate);
+      },
+
+      matchDescription(query: AnyQueryBuilder, matchDescription: string) {
+        query.where(`${(UncategorizedCashflowTransaction.tableName)}.description`, 'like', `%${matchDescription}%`);
       },
     };
   }
